@@ -1,11 +1,3 @@
-definitions:
-  math.GetMathExampleResponse:
-    properties:
-      id:
-        type: integer
-      name:
-        type: string
-    type: object
 info:
   contact:
     name: Matěj Uchytil
@@ -14,17 +6,26 @@ info:
   title: Example REST API
   version: "1.0"
 paths:
-  /math:
-    get:
-      operationId: math/test_get
+  /math/greatest-common-divisor:
+    post:
+      operationId: math/greatest-common-divisor
+      parameters:
+      - description: bottle info
+        in: body
+        name: bottles
+        required: true
+        schema:
+          items:
+            type: integer
+          type: array
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/math.GetMathExampleResponse'
-      summary: get example object for test purposes.
+            type: integer
+      summary: All numbers must be integers greater than zero.
       tags:
       - /math
 swagger: "2.0"

@@ -19,36 +19,37 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/math": {
-            "get": {
+        "/math/greatest-common-divisor": {
+            "post": {
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "/math"
                 ],
-                "summary": "get example object for test purposes.",
-                "operationId": "math/test_get",
+                "summary": "All numbers must be integers greater than zero.",
+                "operationId": "math/greatest-common-divisor",
+                "parameters": [
+                    {
+                        "description": "bottle info",
+                        "name": "bottles",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/math.GetMathExampleResponse"
+                            "type": "integer"
                         }
                     }
-                }
-            }
-        }
-    },
-    "definitions": {
-        "math.GetMathExampleResponse": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
                 }
             }
         }
