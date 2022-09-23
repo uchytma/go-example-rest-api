@@ -9,8 +9,9 @@ import (
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
 	"github.com/go-chi/render"
-
+	httpSwagger "github.com/swaggo/http-swagger"
 	"github.com/uchytma/go-example-rest-api/api/endpoints/math"
+	_ "github.com/uchytma/go-example-rest-api/docs"
 )
 
 func Initialize() *chi.Mux {
@@ -31,12 +32,18 @@ func Initialize() *chi.Mux {
 		}),
 	)
 
+	fs := http.FileServer(http.Dir("C:\\Users\\matej\\source\\repos\\uchytma\\go-example-rest-api\\docs"))
+
 	//Sets context for all requests
 	router.Use(middleware.Timeout(30 * time.Second))
-
-	router.Route("/v1", func(r chi.Router) {
+	router.Handle("/swagger/json/swagger.json", http.StripPrefix("/swagger/json/", fs))
+	router.Route("/", func(r chi.Router) {
 		r.Mount("/math", math.Routes())
 	})
+
+	router.Get("/swagger/*", httpSwagger.Handler(
+		httpSwagger.URL("http://localhost:8080/swagger/json/swagger.json"), //The url pointing to API definition
+	))
 
 	return router
 }

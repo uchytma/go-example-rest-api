@@ -1,0 +1,30 @@
+definitions:
+  math.GetMathExampleResponse:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+info:
+  contact:
+    name: Matěj Uchytil
+    url: https://github.com/uchytma/go-example-rest-api
+  description: Example of rest API written in Golang, used for learning purposes.
+  title: Example REST API
+  version: "1.0"
+paths:
+  /math:
+    get:
+      operationId: math/test_get
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/math.GetMathExampleResponse'
+      summary: get example object for test purposes.
+      tags:
+      - /math
+swagger: "2.0"

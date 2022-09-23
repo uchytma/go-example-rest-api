@@ -13,6 +13,12 @@ func Routes( /* any dependency injection comes here*/ ) *chi.Mux {
 	return r
 }
 
+// @Summary get example object for test purposes.
+// @ID math/test_get
+// @Produce json
+// @Success 200 {object} GetMathExampleResponse
+// @Router /math [get]
+// @Tags /math
 // Render response with example JSON object
 func GetMathExample(w http.ResponseWriter, r *http.Request) {
 	resp := GetMathExampleResponse{

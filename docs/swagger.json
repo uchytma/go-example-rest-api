@@ -1,0 +1,47 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Example of rest API written in Golang, used for learning purposes.",
+        "title": "Example REST API",
+        "contact": {
+            "name": "Matěj Uchytil",
+            "url": "https://github.com/uchytma/go-example-rest-api"
+        },
+        "version": "1.0"
+    },
+    "paths": {
+        "/math": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "/math"
+                ],
+                "summary": "get example object for test purposes.",
+                "operationId": "math/test_get",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/math.GetMathExampleResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "math.GetMathExampleResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
