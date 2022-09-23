@@ -10,9 +10,9 @@ paths:
     post:
       operationId: math/greatest-common-divisor
       parameters:
-      - description: bottle info
+      - description: All numbers must be greater than zero.
         in: body
-        name: bottles
+        name: model
         required: true
         schema:
           items:
@@ -25,7 +25,7 @@ paths:
           description: OK
           schema:
             type: integer
-      summary: All numbers must be integers greater than zero.
+      summary: Return greater common divisor (GCD) of specified numbers.
       tags:
       - /math
 swagger: "2.0"

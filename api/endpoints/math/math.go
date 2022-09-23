@@ -6,6 +6,8 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/render"
+
+	"github.com/uchytma/go-example-rest-api/internal/math/gcd"
 )
 
 func Routes( /* any dependency injection comes here*/ ) *chi.Mux {
@@ -27,21 +29,28 @@ func GreatestCommonDivisor(w http.ResponseWriter, r *http.Request) {
 	data := UintArray{}
 
 	if err := render.Bind(r, &data); err != nil {
-		var err = &ErrResponse{
-			HTTPStatusCode: 400,
-			StatusText:     err.Error(),
-		}
-		render.Render(w, r, err)
+		RenderErrorResponse(w, r, &err)
 		return
 	}
 
-	//todo: https://stackoverflow.com/questions/16628088/euclidean-algorithm-gcd-with-multiple-numbers
-	var resp uint = 0
-	for _, el := range data {
-		resp += el
+	var d []uint = data
+
+	resp, err := gcd.CalculateGcd(&d)
+
+	if err != nil {
+		RenderErrorResponse(w, r, &err)
+		return
 	}
 
 	render.JSON(w, r, &resp)
+}
+
+func RenderErrorResponse(w http.ResponseWriter, r *http.Request, errorData *error) {
+	var err = &ErrResponse{
+		HTTPStatusCode: 400,
+		StatusText:     (*errorData).Error(),
+	}
+	render.Render(w, r, err)
 }
 
 func (e *ErrResponse) Render(w http.ResponseWriter, r *http.Request) error {

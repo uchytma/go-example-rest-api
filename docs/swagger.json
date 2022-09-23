@@ -18,12 +18,12 @@
                 "tags": [
                     "/math"
                 ],
-                "summary": "All numbers must be integers greater than zero.",
+                "summary": "Return greater common divisor (GCD) of specified numbers.",
                 "operationId": "math/greatest-common-divisor",
                 "parameters": [
                     {
-                        "description": "bottle info",
-                        "name": "bottles",
+                        "description": "All numbers must be greater than zero.",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
