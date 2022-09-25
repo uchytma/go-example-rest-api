@@ -7,8 +7,7 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/render"
 
-	"github.com/uchytma/go-example-rest-api/internal/math/gcd"
-	"github.com/uchytma/go-example-rest-api/internal/math/lcm"
+	"github.com/uchytma/go-example-rest-api/internal/math"
 )
 
 func Routes( /* any dependency injection comes here*/ ) *chi.Mux {
@@ -35,7 +34,7 @@ func GreatestCommonDivisor(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resp, err := gcd.CalculateGcd(data...)
+	resp, err := math.Gcd{}.Calculate(data...)
 
 	if err != nil {
 		RenderErrorResponse(w, r, &err)
@@ -62,7 +61,7 @@ func LeastCommonMultiple(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resp, err := lcm.CalculateLcm(data...)
+	resp, err := math.Lcm{}.Calculate(data...)
 
 	if err != nil {
 		RenderErrorResponse(w, r, &err)
