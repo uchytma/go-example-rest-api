@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"time"
 
+	"os"
+
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
@@ -32,11 +34,13 @@ func Initialize() *chi.Mux {
 		}),
 	)
 
-	fs := http.FileServer(http.Dir("C:\\Users\\matej\\source\\repos\\uchytma\\go-example-rest-api\\docs"))
+	fs := getHandlerWithDoc()
 
 	//Sets context for all requests
 	router.Use(middleware.Timeout(30 * time.Second))
-	router.Handle("/swagger/json/swagger.json", http.StripPrefix("/swagger/json/", fs))
+	if fs != nil {
+		router.Handle("/swagger/json/swagger.json", http.StripPrefix("/swagger/json/", fs))
+	}
 	router.Route("/", func(r chi.Router) {
 		r.Mount("/math", math.Routes())
 	})
@@ -46,6 +50,18 @@ func Initialize() *chi.Mux {
 	))
 
 	return router
+}
+
+func getHandlerWithDoc() http.Handler {
+	//detect first exists directory. There should be swagger.json.
+	docSearchLocations := []string{"docs", "doc"}
+
+	for _, location := range docSearchLocations {
+		if _, err := os.Stat(location); !os.IsNotExist(err) {
+			return http.FileServer(http.Dir(location))
+		}
+	}
+	return nil
 }
 
 func ServeRouter() {
