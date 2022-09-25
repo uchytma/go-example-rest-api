@@ -25,6 +25,12 @@ Run tests
 go test -v ./testing
 ```
 
+Docker build (run from repo root) & run (expose port 8080 at localhost)
+```
+docker build --tag go-example-rest-api -f .\deployments\Dockerfile  .
+docker run --name go-example-rest-api-instance --publish 8080:8080 go-example-rest-api
+```
+
 ## Api documentation
 Api doc (swagger) is avaliable at `<url>/swagger/index.html`
 
