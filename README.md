@@ -12,12 +12,12 @@ Used dependencies:
 ## Commands
 Run doc regeneration (openAPI)
 ```
-swag init -d .\cmd\exaple-rest-api\ --parseDependency=true
+swag init -d .\cmd\example-rest-api\ --parseDependency=true
 ```
 
 Run API (hardcoded http://localhost:8080)
 ```
-go run ./cmd/exaple-rest-api/main.go
+go run ./cmd/example-rest-api/main.go
 ```
 
 Run tests
