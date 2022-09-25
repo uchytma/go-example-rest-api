@@ -14,7 +14,18 @@ Run doc regeneration (openAPI)
 ```
 swag init -d .\cmd\exaple-rest-api\ --parseDependency=true
 ```
+
 Run API (hardcoded http://localhost:8080)
 ```
 go run ./cmd/exaple-rest-api/main.go
 ```
+
+Run tests
+```
+go test -v ./testing
+```
+
+## Api documentation
+Api doc (swagger) is avaliable at `<url>/swagger/index.html`
+
+![image](https://user-images.githubusercontent.com/28567403/192160129-f7eabf3b-f3d3-4a94-87d8-fadc5d44297f.png)
