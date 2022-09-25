@@ -28,4 +28,26 @@ paths:
       summary: Return greater common divisor (GCD) of specified numbers.
       tags:
       - /math
+  /math/least-common-multiple:
+    post:
+      operationId: math/least-common-multiple
+      parameters:
+      - description: All numbers must be greater than zero.
+        in: body
+        name: model
+        required: true
+        schema:
+          items:
+            type: integer
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+      summary: Return least common multiple (LCM) of specified numbers.
+      tags:
+      - /math
 swagger: "2.0"

@@ -5,27 +5,23 @@ import (
 )
 
 // Calculate greater common divisor (GCD) of specified numbers.
-func CalculateGcd(numbers *[]uint) (uint, error) {
+func CalculateGcd(numbers ...uint) (computedResult uint, error error) {
 	if numbers == nil {
 		return 0, errors.New("Numbers parameter cannot be null.")
 	}
 
-	nums := *numbers
-	numsCount := len(nums)
+	numsCount := len(numbers)
 	if numsCount == 1 {
-		return nums[0], nil
+		return numbers[0], nil
 	}
 
-	resp := nums[0]
+	resp := numbers[0]
 
-	for index, _ := range nums {
-		if index == numsCount-1 {
-			return resp, nil
-		}
-		resp = calculateGcdEuclid(resp, nums[index+1])
+	for i := 1; i < numsCount; i++ {
+		resp = calculateGcdEuclid(resp, numbers[i])
 	}
 
-	panic("Gcd algorithm failed.")
+	return resp, nil
 }
 
 // https://siongui.github.io/2017/05/14/go-gcd-via-euclidean-algorithm/

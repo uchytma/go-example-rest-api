@@ -43,6 +43,40 @@
                     }
                 }
             }
+        },
+        "/math/least-common-multiple": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "/math"
+                ],
+                "summary": "Return least common multiple (LCM) of specified numbers.",
+                "operationId": "math/least-common-multiple",
+                "parameters": [
+                    {
+                        "description": "All numbers must be greater than zero.",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            }
         }
     }
 }

@@ -8,11 +8,13 @@ import (
 	"github.com/go-chi/render"
 
 	"github.com/uchytma/go-example-rest-api/internal/math/gcd"
+	"github.com/uchytma/go-example-rest-api/internal/math/lcm"
 )
 
 func Routes( /* any dependency injection comes here*/ ) *chi.Mux {
 	r := chi.NewRouter()
 	r.Post("/greatest-common-divisor", GreatestCommonDivisor)
+	r.Post("/least-common-multiple", LeastCommonMultiple)
 	return r
 }
 
@@ -33,9 +35,34 @@ func GreatestCommonDivisor(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var d []uint = data
+	resp, err := gcd.CalculateGcd(data...)
 
-	resp, err := gcd.CalculateGcd(&d)
+	if err != nil {
+		RenderErrorResponse(w, r, &err)
+		return
+	}
+
+	render.JSON(w, r, &resp)
+}
+
+// Return least common multiple (LCM) of specified numbers.
+// @Summary Return least common multiple (LCM) of specified numbers.
+// @Tags /math
+// @ID math/least-common-multiple
+// @Produce json
+// @Success 200 {object} uint
+// @Router /math/least-common-multiple [post]
+// @Param model body UintArray true "All numbers must be greater than zero."
+func LeastCommonMultiple(w http.ResponseWriter, r *http.Request) {
+
+	data := UintArray{}
+
+	if err := render.Bind(r, &data); err != nil {
+		RenderErrorResponse(w, r, &err)
+		return
+	}
+
+	resp, err := lcm.CalculateLcm(data...)
 
 	if err != nil {
 		RenderErrorResponse(w, r, &err)
@@ -68,10 +95,6 @@ func (a *UintArray) Bind(r *http.Request) error {
 }
 
 type ErrResponse struct {
-	Err            error `json:"-"` // low-level runtime error
-	HTTPStatusCode int   `json:"-"` // http response status code
-
-	StatusText string `json:"status"`          // user-level status message
-	AppCode    int64  `json:"code,omitempty"`  // application-specific error code
-	ErrorText  string `json:"error,omitempty"` // application-level error message, for debugging
+	HTTPStatusCode int    `json:"-"`
+	StatusText     string `json:"status"`
 }
